@@ -8,7 +8,16 @@
     </head>
     <body>
         <div id="app" class="m-3">
-            
+            <div class="row">
+                <div class="col-6">
+                    <h1 class="text-center">{{title}}</h1>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-primary">
+                        {{ cartItemsCount }} Checkout
+                    </button>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-3 mb-3" v-for="lesson in lessons">
                     <div class="card">
@@ -17,7 +26,9 @@
                             <h5 class="card-title" v-text="lesson.subject"></h5>
                             <p>Location: {{lesson.location}}</p>
                             <p>Price: {{lesson.price}}</p>
-                            <p>Number of spaces: </p>
+                            <p class="card-text">Available: {{lesson.spaces - cartItems(lesson)}}</p>
+                            <button class="btn btn-primary" v-on:click="addToCart(lesson)" v-if="canAddToCart(lesson)">Add to Cart</button>
+                            <button class="btn btn-secondary" disabled v-else>Add to cart</button>
                         </div>
                     </div>
                 </div>
@@ -31,12 +42,29 @@
                 data:{
                     title: "Lesson store",
                     lessons: lessons,
+                    cart: []
                 },
                 methods:{
-
+                    addToCart: function (lesson) {
+                        this.cart.push(lesson);
+                    },
+                    canAddToCart: function (lesson) {
+                        return lesson.spaces > this.cartItems(lesson);
+                    },
+                    cartItems(id) {
+                        let count = 0;
+                        for (let i = 0; i < this.cart.length; i++) {
+                            if (this.cart[i] === id) {
+                                count++;
+                            }
+                        }
+                        return count;
+                    },
                 },
                 computed:{
-
+                    cartItemsCount: function () {
+                        return this.cart.length;
+                    },
                 }
             })
         </script>
