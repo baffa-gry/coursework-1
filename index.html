@@ -4,30 +4,24 @@
         <title>Lesson Store</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+        <script src="lesson.js"></script>
     </head>
     <body>
         <div id="app" class="m-3">
+            
             <div class="row">
-                <div class="col-6">
-                    <h1 class="text-center">{{title}}</h1>
-                </div>
-                <div class="col-6">
-                    <button class="btn btn-primary">
-                        Checkout
-                    </button>
+                <div class="col-3 mb-3" v-for="lesson in lessons">
+                    <div class="card">
+                        <img v-bind:src="lesson.image" style="height: 200px;">
+                        <div class="card-body">
+                            <h5 class="card-title" v-text="lesson.subject"></h5>
+                            <p>Location: {{lesson.location}}</p>
+                            <p>Price: {{lesson.price}}</p>
+                            <p>Number of spaces: </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card" style="width:400px">
-                <img class="card-img-top" v-bind:src="product.img">
-                <div class="card-body">
-                  <h4 class="card-title">{{product.title}}</h4>
-                  <p class="card-text">Price: {{product.price}}</p>
-                  <p class="card-text">Location: {{product.location}}</p>
-                  <p class="card-text">Available: {{product.availableInventory - cartItems}}</p>
-                  <button class="btn btn-primary" v-on:click="addToCart()" v-if="canAddToCart">Add to Cart</button>
-                  <button class="btn btn-secondary" disabled v-else>Add to cart</button>
-                </div>
-              </div>
 
         </div>
 
@@ -35,7 +29,14 @@
             let app = new Vue({
                 el: "#app",
                 data:{
-                    title: "Lesson store"
+                    title: "Lesson store",
+                    lessons: lessons,
+                },
+                methods:{
+
+                },
+                computed:{
+
                 }
             })
         </script>
